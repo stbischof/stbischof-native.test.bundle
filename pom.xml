@@ -1,0 +1,191 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>native.test</groupId>
+	<artifactId>native.test.bundle</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<bnd-maven-plugin.version>6.1.0-SNAPSHOT</bnd-maven-plugin.version>
+
+		<org.osgi.version>6.0.0</org.osgi.version>
+		<org.osgi.compendium.version>7.0.0</org.osgi.compendium.version>
+		<org.osgi.annotation.version>7.0.0</org.osgi.annotation.version>
+		<org.osgi.namespace.extender.version>1.0.1</org.osgi.namespace.extender.version>
+		<org.osgi.service.cm.version>1.6.0</org.osgi.service.cm.version>
+		<org.osgi.service.component.version>1.4.0</org.osgi.service.component.version>
+		<maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+
+
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>repo1.maven.org</id>
+			<url>https://repo1.maven.org/maven2/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+		<repository>
+			<id>bndtools.jfrog.io-snapshot</id>
+			<url>https://bndtools.jfrog.io/bndtools/libs-snapshot</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-maven-plugin</artifactId>
+				<version>${bnd-maven-plugin.version}</version>
+				<configuration>
+					<bnd><![CDATA[
+            -includepackage: ntv.*
+        ]]></bnd>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>bnd-process</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven-jar-plugin.version}</version>
+				<configuration>
+					<archive>
+						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-resolver-maven-plugin</artifactId>
+				<version>${bnd-maven-plugin.version}</version>
+				<executions>
+					<!-- Integration Test Configuration -->
+					<execution>
+						<goals>
+							<goal>resolve</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>resolve-test</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>resolve</goal>
+						</goals>
+						<configuration>
+							<bndruns>
+								<include>*.bndrun</include>
+							</bndruns>
+							<bundles>
+								<bundle>${project.build.directory}/${project.build.finalName}-tests.jar</bundle>
+							</bundles>
+							<failOnChanges>false</failOnChanges>
+							<includeDependencyManagement>true</includeDependencyManagement>
+							<useMavenDependencies>true</useMavenDependencies>
+							<reportOptional>false</reportOptional>
+
+							<scopes>
+								<scope>compile</scope>
+								<scope>runtime</scope>
+								<scope>test</scope>
+								<scope>provided</scope>
+							</scopes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>${org.osgi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi.cmpn</artifactId>
+			<version>${org.osgi.compendium.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+		<!-- OSGi specifications -->
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi.annotation</artifactId>
+			<version>${org.osgi.annotation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.namespace.extender</artifactId>
+			<version>${org.osgi.namespace.extender.version} </version>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.cm</artifactId>
+			<version>${org.osgi.service.cm.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.service.component</artifactId>
+			<version>${org.osgi.service.component.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.remote.agent</artifactId>
+			<version>5.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.remote.launcher</artifactId>
+			<version>5.3.0</version>
+		</dependency>
+		
+		
+		
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.scr</artifactId>
+			<version>2.1.30</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.framework</artifactId>
+			<version>7.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.32</version>
+		</dependency>
+
+	</dependencies>
+
+
+</project>
