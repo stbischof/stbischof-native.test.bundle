@@ -113,6 +113,28 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-run-maven-plugin</artifactId>
+				<version>5.3.0</version>
+
+				<!-- shared configuration -->
+				<configuration>
+					<includeDependencyManagement>true</includeDependencyManagement>
+					<scopes>
+						<scope>compile</scope>
+						<scope>runtime</scope>
+						<scope>test</scope>
+						<scope>provided</scope>
+					</scopes>
+					<bndrun>remote.bndrun</bndrun>
+				</configuration>
+
+
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -165,9 +187,9 @@
 			<artifactId>biz.aQute.remote.launcher</artifactId>
 			<version>5.3.0</version>
 		</dependency>
-		
-		
-		
+
+
+
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.scr</artifactId>
@@ -179,6 +201,11 @@
 			<version>7.0.1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.32</version>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>

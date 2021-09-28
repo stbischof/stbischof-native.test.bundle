@@ -19,7 +19,9 @@ remote = \
 	
 ## run	
 	
--runrequires: bnd.identity;id='native.test.bundle'
+-runrequires: \
+	bnd.identity;id='native.test.bundle',\
+	bnd.identity;id='slf4j.api'
 -runbundles: \
 	biz.aQute.bndlib;version='[5.3.0,5.3.1)',\
 	native.test.bundle;version='[0.0.1,0.0.2)',\
