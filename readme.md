@@ -9,7 +9,7 @@ start remote server local:
 this is the target where the native launcher should deploy the bundles
 
 
-Run via Maven works(revolving error could be ignored for the moment)
+Run via Maven works
 `mvn bnd-run:run`
 
-IDS support is missing
+IDE support is missing

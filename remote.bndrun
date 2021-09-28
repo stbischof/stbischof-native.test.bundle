@@ -21,9 +21,10 @@ remote = \
 	
 -runrequires: \
 	bnd.identity;id='native.test.bundle',\
-	bnd.identity;id='slf4j.api'
+	bnd.identity;id='org.osgi.util.promise',\
+	bnd.identity;id='org.osgi.util.function'
 -runbundles: \
-	biz.aQute.bndlib;version='[5.3.0,5.3.1)',\
 	native.test.bundle;version='[0.0.1,0.0.2)',\
 	org.apache.felix.scr;version='[2.1.30,2.1.31)',\
-	slf4j.api;version='[1.7.32,1.7.33)'
+	org.osgi.util.function;version='[1.1.0,1.1.1)',\
+	org.osgi.util.promise;version='[1.1.1,1.1.2)'
