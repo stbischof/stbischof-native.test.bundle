@@ -1,8 +1,4 @@
--runee: JavaSE-1.8
-
--runfw: org.apache.felix.framework
--resolve.effective: active
-
+### remote
 
 remote = \
 	remote; \
@@ -12,9 +8,16 @@ remote = \
 
 -runpath: \
 	biz.aQute.remote.launcher
+
+
+## resolve
+-runee: JavaSE-1.8
+
+-runfw: org.apache.felix.framework
+-resolve.effective: active
 	
 	
-	
+## run	
 	
 -runrequires: bnd.identity;id='native.test.bundle'
 -runbundles: \
